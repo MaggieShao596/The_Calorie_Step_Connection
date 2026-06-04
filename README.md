@@ -253,6 +253,15 @@ The plot below shows the empirical distribution of the test statistic under the 
 - **Test Statistic:** Absolute difference in mean sugar between recipes with missing and non-missing `description`.
 - **Result:** p-value > 0.05. We fail to reject the null hypothesis — the missingness of `description` is independent of sugar content.
 
+The plot below shows the distribution of sugar (PDV) when `description` is missing (True) versus not missing (False). The two distributions look very similar, suggesting that sugar content is not strongly related to whether a description is missing.
+
+<iframe
+  src="assets/missingness_sugar_dist.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
 The plot below shows the empirical distribution of the test statistic under the null hypothesis. The red line indicates the observed statistic, which falls within the null distribution, confirming that there is no statistically significant relationship between sugar content and the missingness of `description`.
 
 <iframe
