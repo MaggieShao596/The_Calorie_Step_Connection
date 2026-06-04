@@ -275,6 +275,7 @@ The plot below shows the empirical distribution of the test statistic under the 
 
 ## Hypothesis Testing
 
+
 ## Framing a Prediction Problem
 
 Our goal is to predict the calories of recipes. The model we are using is a regression model.
@@ -286,6 +287,10 @@ The metrics we will be using to evaluate the model are RÂ² and RMSE. We chose RÂ
 At the time of prediction, we would know features such as the number of ingredients, number of steps, and cooking time, since these are properties of the recipe itself before it is consumed. We would not know the calories, as that is exactly what we are trying to predict.
 
 ## Baseline Model
+
+##### The baseline model will predict the calories of recipes based on the sugar(PDV) and number of ingredients. 
+##### Both sugar(PDV) and number of ingredients are quantitative data. We log transform the Sugar(PDV) feature because this features is highly right skewed. Take log transform will reduce skewness and easier for a model to learn
+##### The baseline regression model achieved an RMSE of 0.859 and $R^2$ value of 0.142 on the test set. The RMSE refers that the model's predictions differ from the actual log-transformed caloreis values by approximately 0.859 units on acerage. The $R^2$ value of 0.142 suggests that the model explain only 14.2% of the variation in the response variable. This baseline model is not considered stron as most of the variability in calorie content remains unexplained.
 
 ## Final Model
 
