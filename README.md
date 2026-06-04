@@ -1,8 +1,18 @@
-## The Calorie-Step Connection: Can We Predict Recipe Calories?
+## 🍳 Can We Predict Recipe Calories?
 
 **By Jacey Chow, Maggie Shao**
 
+## Overview
+
+This data science project, conducted at UC San Diego, focuses on predicting the calories of a recipe using recipe-level characteristics from the Food.com dataset. In particular, the project studies whether higher-calorie recipes tend to require more preparation steps, and uses features such as the number of steps, number of ingredients, and cooking time to build a regression model that predicts calorie content.
+
 ## Introduction
+
+The main question we explore is:
+
+**Do recipes with different calorie levels have different average numbers of steps?**
+
+We also examine missingness patterns in the dataset and test whether missing values in columns such as `avg_rating` and `description` depend on other recipe features.
 
 ## Data Cleaning and Exploratory Data Analysis
 
