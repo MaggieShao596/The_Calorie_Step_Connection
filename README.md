@@ -55,6 +55,20 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 | `rating` | User rating |
 | `review` | User review text |
 
+Given the datasets, our project investigates whether recipes with different calorie levels tend to have different levels of recipe complexity. More specifically, we focus on whether calorie groups are associated with differences in the average number of preparation steps. To support this analysis, we constructed a clean, recipe-level dataset by combining information from both the recipes and interactions datasets.
+
+First, we processed the interactions dataset to create a new variable called `avg_rating`, which represents the average user rating for each recipe. Ratings of 0 were treated as missing values because they do not represent valid user ratings. We then grouped the interactions data by `recipe_id`, calculated the mean rating using only non-missing ratings, and merged this recipe-level rating information into the recipes dataset using the recipe identifiers.
+
+Next, we cleaned and engineered several features from the recipes dataset. The original `nutrition` column stored multiple nutrition values together as a list-like string, so we converted it into a usable list format and separated it into individual numeric columns. These columns include `calories`, `total fat(PDV)`, `sugar(PDV)`, `sodium(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, and `carbohydrates(PDV)`. This step allowed us to analyze calories directly and compare recipes based on nutritional content.
+
+We also used existing recipe characteristics such as `n_steps`, `n_ingredients`, and `minutes` to describe recipe complexity. The variable `n_steps` is especially important because our main research question asks whether recipes with different calorie levels require different numbers of preparation steps. In addition, we converted the `tags` column into a usable list format and created `n_tags`, which counts the number of tags associated with each recipe.
+
+To make calorie comparisons clearer, we created a categorical variable called `calorie_group`. Recipes were divided into four groups based on calorie quartiles: `Low`, `Medium`, `High`, and `Very High`. This allowed us to compare average number of steps, average ratings, and other recipe features across different calorie levels.
+
+The most relevant variables for our analysis are `calories`, `calorie_group`, `n_steps`, `n_ingredients`, `minutes`, `avg_rating`, and the separated nutrition variables. These variables allow us to examine whether calorie level is connected to recipe complexity and whether higher-calorie recipes tend to involve more preparation steps.
+
+By structuring the data in this way, we created a clean recipe-level dataset that supports exploratory analysis, missingness assessment, and hypothesis testing. Our research question helps us understand how calorie content, preparation effort, and recipe characteristics are related. This can help users choose recipes more effectively, help recipe creators understand how nutritional content connects to preparation complexity, and provide insight into how food platforms may organize or recommend recipes.
+
 ### missing values
 | Column | Missing Count |
 |--------|--------------|
