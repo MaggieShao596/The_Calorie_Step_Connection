@@ -17,9 +17,12 @@ Answering this question can help:
 - Recipe platforms surface recipes that match users' time and health preferences
 - Researchers and developers build better recipe recommendation systems
 
+### Datasets Discription
 This project uses two datasets from [Food.com](https://www.food.com/):
 - `RAW_recipes`: contains recipe-level information (83,782 rows)
 - `interactions`: contains user ratings and reviews (731,927 rows)
+
+These datasets were originally collected for recommender system research in the paper Generating Personalized Recipes from Historical User Preferences by Majumder et al
 
 The most relevant columns for our analysis are:
 
@@ -30,7 +33,6 @@ The most relevant columns for our analysis are:
 | `n_ingredients` | Number of ingredients |
 | `avg_rating` | Average user rating |
 | `minutes` | Time required to prepare the recipe |
-
 
 
 The main question we explore is:
