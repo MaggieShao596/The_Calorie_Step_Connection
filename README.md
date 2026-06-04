@@ -221,6 +221,7 @@ The plot below shows the empirical distribution of the test statistic under the 
   frameborder="0"
 ></iframe>
 
+
 #### `description` Missingness depends on `protein (PDV)`
 
 - **Null Hypothesis:** The missingness of `description` is independent of `protein (PDV)`.
@@ -240,7 +241,7 @@ The plot below shows the distribution of protein (PDV) when `description` is mis
 The plot below shows the empirical distribution of the test statistic under the null hypothesis. The red line indicates the observed statistic, which falls far to the right of the null distribution, confirming that the result is statistically significant.
 
 <iframe
-  src="assets/missingness_protein_perm.html"
+  src="assets/missingness_protein_perm_3.html"
   width="800"
   height="500"
   frameborder="0"
