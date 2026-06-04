@@ -55,6 +55,22 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 | `rating` | User rating |
 | `review` | User review text |
 
+### missing values
+| Column | Missing Count |
+|--------|--------------|
+| `name` | 1 |
+| `id` | 0 |
+| `minutes` | 0 |
+| `contributor_id` | 0 |
+| `submitted` | 0 |
+| `tags` | 0 |
+| `nutrition` | 0 |
+| `n_steps` | 0 |
+| `steps` | 0 |
+| `description` | 70 |
+| `ingredients` | 0 |
+| `n_ingredients` | 0 |
+| `avg_rating` | 2609 |
 
 ## Data Cleaning and Exploratory Data Analysis
 
