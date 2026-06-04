@@ -6,7 +6,32 @@
 
 This data science project, conducted at UC San Diego, focuses on predicting the calories of a recipe using recipe-level characteristics from the Food.com dataset. In particular, the project studies whether higher-calorie recipes tend to require more preparation steps, and uses features such as the number of steps, number of ingredients, and cooking time to build a regression model that predicts calorie content.
 
-## Introduction
+ ## Introduction
+
+Food is an important part of everyday life, and cooking is both a practical activity and a creative outlet for many people. Recipes vary widely in the time, effort, ingredients, and nutritional content they require — and understanding these differences can help both home cooks and recipe platforms better serve their users.
+
+This data science project, conducted at UC San Diego, explores a dataset of recipes and user interactions from Food.com. The dataset contains over 83,000 recipes with information such as the number of preparation steps, number of ingredients, nutritional values, and user ratings. Our central question is: **Do higher-calorie recipes tend to require more preparation steps?** We are interested in understanding whether calorie-dense recipes are also more complex to prepare, and ultimately whether we can predict a recipe's calorie content based on its observable characteristics.
+
+Answering this question can help:
+- Users better understand the relationship between recipe complexity and nutritional content
+- Recipe platforms surface recipes that match users' time and health preferences
+- Researchers and developers build better recipe recommendation systems
+
+This project uses two datasets from [Food.com](https://www.food.com/):
+- `RAW_recipes`: contains recipe-level information (83,782 rows)
+- `interactions`: contains user ratings and reviews (731,927 rows)
+
+The most relevant columns for our analysis are:
+
+| Column | Description |
+|--------|-------------|
+| `calories` | Total calories of the recipe |
+| `n_steps` | Number of preparation steps |
+| `n_ingredients` | Number of ingredients |
+| `avg_rating` | Average user rating |
+| `minutes` | Time required to prepare the recipe |
+
+
 
 The main question we explore is:
 
