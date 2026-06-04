@@ -82,6 +82,19 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 | millionaire pound cake | 120 | 7 | 7 | 878.3 | 63.0 | 326.0 | 13.0 | 20.0 | 123.0 | 39.0 | 5.0 |
 | 2000 meatloaf | 90 | 17 | 13 | 267.0 | 30.0 | 12.0 | 12.0 | 29.0 | 48.0 | 2.0 | 5.0 |
 
+### Univariate Analysis
+
+We first examined the distribution of calories across all recipes (after removing outliers above 4,000 calories).
+
+<iframe
+  src="assets/calories_hist.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+The distribution is right-skewed, with most recipes falling between 0 and 800 calories.
+
 ## Data Cleaning and Exploratory Data Analysis
 
 ## Assessment of Missingness
