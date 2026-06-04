@@ -119,8 +119,18 @@ By structuring the data in this way, we created a clean recipe-level dataset tha
 
 ### Univariate Analysis
 
-We first examined the distribution of calories across all recipes (after removing outliers above 4,000 calories).
+We first examined the distribution of calories across all recipes.
 
+<iframe
+  src="assets/calories_hist_adjusted.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+Data is extremely right-skewed because there are some recipes with very large carlorie values aka outliers, such as 10,000 to 40,000 calories  
+
+To fix this we remove unrealistic outliers that limited the calories from 0 to 4000.
 <iframe
   src="assets/calories_hist.html"
   width="800"
@@ -133,7 +143,7 @@ The distribution is right-skewed, with most recipes falling between 0 and 800 ca
 Also, We explored the relationship between calorie group and numbers of preperation steps.
 
 <iframe
-  src="assets/calorie_group_box.html(1)"
+  src="assets/calorie_group_box.html"
   width="800"
   height="500"
   frameborder="0"
