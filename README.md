@@ -57,6 +57,7 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 
 Given the datasets, our project investigates whether recipes with different calorie levels tend to have different levels of recipe complexity. More specifically, we focus on whether calorie groups are associated with differences in the average number of preparation steps. To support this analysis, we constructed a clean, recipe-level dataset by combining information from both the recipes and interactions datasets.
 
+## Data Cleaning and Exploratory Data Analysis
 First, we processed the interactions dataset to create a new variable called `avg_rating`, which represents the average user rating for each recipe. Ratings of 0 were treated as missing values because they do not represent valid user ratings. We then grouped the interactions data by `recipe_id`, calculated the mean rating using only non-missing ratings, and merged this recipe-level rating information into the recipes dataset using the recipe identifiers.
 
 Next, we cleaned and engineered several features from the recipes dataset. The original `nutrition` column stored multiple nutrition values together as a list-like string, so we converted it into a usable list format and separated it into individual numeric columns. These columns include `calories`, `total fat(PDV)`, `sugar(PDV)`, `sodium(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, and `carbohydrates(PDV)`. This step allowed us to analyze calories directly and compare recipes based on nutritional content.
@@ -65,7 +66,27 @@ We also used existing recipe characteristics such as `n_steps`, `n_ingredients`,
 
 To make calorie comparisons clearer, we created a categorical variable called `calorie_group`. Recipes were divided into four groups based on calorie quartiles: `Low`, `Medium`, `High`, and `Very High`. This allowed us to compare average number of steps, average ratings, and other recipe features across different calorie levels.
 
+### summary table of calorie groups
+
+| calorie_group | count | mean_steps | median_steps | mean_calories |
+|---------------|-------|------------|--------------|---------------|
+| Low | 20946 | 8.17 | 7.0 | 101.14 |
+| Medium | 20952 | 9.57 | 8.0 | 236.53 |
+| High | 20940 | 10.62 | 9.0 | 392.56 |
+| Very High | 20944 | 12.06 | 11.0 | 989.57 |
+
 The most relevant variables for our analysis are `calories`, `calorie_group`, `n_steps`, `n_ingredients`, `minutes`, `avg_rating`, and the separated nutrition variables. These variables allow us to examine whether calorie level is connected to recipe complexity and whether higher-calorie recipes tend to involve more preparation steps.
+
+### Cleaned Dataset Preview
+
+| name | minutes | n_steps | n_ingredients | calories | total fat(PDV) | sugar(PDV) | sodium(PDV) | protein(PDV) | saturated fat(PDV) | carbohydrates(PDV) | avg_rating |
+|------|---------|---------|---------------|----------|----------------|------------|-------------|--------------|-------------------|-------------------|------------|
+| 1 brownies in the world best ever | 40 | 10 | 9 | 138.4 | 10.0 | 50.0 | 3.0 | 3.0 | 19.0 | 6.0 | 4.0 |
+| 1 in canada chocolate chip cookies | 45 | 12 | 11 | 595.1 | 46.0 | 211.0 | 22.0 | 13.0 | 51.0 | 26.0 | 5.0 |
+| 412 broccoli casserole | 40 | 6 | 9 | 194.8 | 20.0 | 6.0 | 32.0 | 22.0 | 36.0 | 3.0 | 5.0 |
+| millionaire pound cake | 120 | 7 | 7 | 878.3 | 63.0 | 326.0 | 13.0 | 20.0 | 123.0 | 39.0 | 5.0 |
+| 2000 meatloaf | 90 | 17 | 13 | 267.0 | 30.0 | 12.0 | 12.0 | 29.0 | 48.0 | 2.0 | 5.0 |
+
 
 By structuring the data in this way, we created a clean recipe-level dataset that supports exploratory analysis, missingness assessment, and hypothesis testing. Our research question helps us understand how calorie content, preparation effort, and recipe characteristics are related. This can help users choose recipes more effectively, help recipe creators understand how nutritional content connects to preparation complexity, and provide insight into how food platforms may organize or recommend recipes.
 
