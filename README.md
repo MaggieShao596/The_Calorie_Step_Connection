@@ -130,6 +130,17 @@ We first examined the distribution of calories across all recipes (after removin
 
 The distribution is right-skewed, with most recipes falling between 0 and 800 calories.
 
+Also, We explored the relationship between calorie group and numbers of preperation steps.
+
+<iframe
+  src="assets/calorie_group_box.html(1)"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+The box plot shows that recipes in the Very High calorie group tend to have more preparation steps compared to the Low calorie group. This suggests that higher-calorie recipes are generally more complex to prepare.
+
 ## Data Cleaning and Exploratory Data Analysis
 
 ## Assessment of Missingness
