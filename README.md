@@ -17,29 +17,44 @@ Answering this question can help:
 - Recipe platforms surface recipes that match users' time and health preferences
 - Researchers and developers build better recipe recommendation systems
 
-### Datasets Discription
+## Datasets Discription
 This project uses two datasets from [Food.com](https://www.food.com/):
-- `RAW_recipes`: contains recipe-level information (83,782 rows)
-- `interactions`: contains user ratings and reviews (731,927 rows)
+- `RAW_recipes`: contains recipe-level information 
+- `interactions`: contains user ratings and reviews 
 
 These datasets were originally collected for recommender system research in the paper Generating Personalized Recipes from Historical User Preferences by Majumder et al
 
-The most relevant columns for our analysis are:
+### 📘 RAW_recipes
+
+This dataset contains **83,782 rows**, where each row corresponds to a unique recipe.
 
 | Column | Description |
 |--------|-------------|
-| `calories` | Total calories of the recipe |
+| `name` | Recipe name |
+| `id` | Recipe ID |
+| `minutes` | Minutes required to prepare the recipe |
+| `contributor_id` | User ID of the recipe contributor |
+| `submitted` | Date the recipe was submitted |
+| `tags` | Food.com tags describing the recipe |
+| `nutrition` | Nutrition info: [calories, fat, sugar, sodium, protein, saturated fat, carbohydrates] |
 | `n_steps` | Number of preparation steps |
+| `steps` | Recipe instructions |
+| `description` | Recipe description |
+| `ingredients` | List of ingredients |
 | `n_ingredients` | Number of ingredients |
-| `avg_rating` | Average user rating |
-| `minutes` | Time required to prepare the recipe |
 
+### 📗 interactions
 
-The main question we explore is:
+This dataset contains **731,927 rows**, where each row represents a user interaction with a recipe.
 
-**Do recipes with different calorie levels have different average numbers of steps?**
+| Column | Description |
+|--------|-------------|
+| `user_id` | User ID |
+| `recipe_id` | Recipe ID |
+| `date` | Date of interaction |
+| `rating` | User rating |
+| `review` | User review text |
 
-We also examine missingness patterns in the dataset and test whether missing values in columns such as `avg_rating` and `description` depend on other recipe features.
 
 ## Data Cleaning and Exploratory Data Analysis
 
