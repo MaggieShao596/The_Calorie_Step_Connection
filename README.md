@@ -155,6 +155,54 @@ The box plot shows that recipes in the Very High calorie group tend to have more
 
 ## Assessment of Missingness
 
+Looking at the cleaned dataset, there are three columns with missing values:
+
+- `avg_rating`: 2,609 missing (~3.11%)
+- `description`: 70 missing (~0.084%)
+- `name`: 1 missing
+
+We conducted a missingness assessment on two columns: `avg_rating` and `description`. 
+We did not conduct a missingness assessment for `name` because only 1 value is missing out of 83,782 recipes, which represents less than 0.01% of the dataset. This single missing value has a negligible effect on our analysis and would not meaningfully impact any of our results or conclusions. 
+For each column, we tested whether its missingness depends on other observed variables using permutation tests.
+
+### NMAR Analysis
+
+We believe `avg_rating` is likely **Not Missing at Random (NMAR)**. Whether a recipe has a rating may depend on the rating value itself, for example, users may be less likely to rate recipes they dislike, meaning the missingness is related to the unseen rating value itself. To determine whether this missingness could instead be MAR, we would need additional data such as the number of recipe views, whether users saved the recipe, or how long the recipe has been posted. If missing ratings are mainly explained by low interaction counts or newer recipes, then the missingness may depend on observed variables rather than the missing value itself.
+
+A plausible NMAR column in this dataset is also `description`. Because `description` is written by the recipe contributor, whether it is missing may depend on unobserved factors such as how much effort the contributor wants to put into the recipe, how confident they feel about it, or whether they believe additional explanation is necessary. These factors are not fully captured in the dataset. Additional data that could help explain this missingness (and potentially make it MAR) would include contributor-level information such as experience level, engagement history, or whether Food.com prompted users to include a description during submission.
+
+### Missingness Dependency Tests
+
+#### `avg_rating` Missingness depends on `calorie_group`
+
+- **Null Hypothesis:** The missingness of `avg_rating` is independent of `calorie_group`.
+- **Alternative Hypothesis:** The missingness of `avg_rating` depends on `calorie_group`.
+- **Test Statistic:** Variance of the mean missingness rate across the four calorie groups.
+- **Result:** p-value < 0.05. We reject the null hypothesis.
+
+The plot below shows the distribution of calorie groups when `avg_rating` is missing (True) versus not missing (False). The Very High calorie group has a noticeably higher proportion of missing ratings compared to other groups, suggesting that the missingness of `avg_rating` is related to calorie level.
+
+<iframe
+  src="assets/missingness_avg_rating_Calories.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+#### `avg_rating` Missingness is independent of `sodium (PDV)`
+
+- **Null Hypothesis:** The missingness of `avg_rating` is independent of `sodium (PDV)`.
+- **Alternative Hypothesis:** The missingness of `avg_rating` depends on `sodium (PDV)`.
+- **Test Statistic:** Absolute difference in mean sodium between missing and non-missing groups.
+- **Result:** p-value > 0.05. We fail to reject the null hypothesis.
+
+<iframe
+  src="assets/missingness_sodium.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
 ## Hypothesis Testing
 
 ## Framing a Prediction Problem
