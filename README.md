@@ -221,7 +221,6 @@ The plot below shows the empirical distribution of the test statistic under the 
   frameborder="0"
 ></iframe>
 
-
 #### `description` Missingness depends on `protein (PDV)`
 
 - **Null Hypothesis:** The missingness of `description` is independent of `protein (PDV)`.
