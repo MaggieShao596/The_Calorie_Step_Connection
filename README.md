@@ -221,6 +221,49 @@ The plot below shows the empirical distribution of the test statistic under the 
   frameborder="0"
 ></iframe>
 
+#### `description` Missingness depends on `protein (PDV)`
+
+- **Null Hypothesis:** The missingness of `description` is independent of `protein (PDV)`.
+- **Alternative Hypothesis:** The missingness of `description` depends on `protein (PDV)`.
+- **Test Statistic:** Absolute difference in mean protein between recipes with missing and non-missing `description`.
+- **Result:** p-value < 0.05. We reject the null hypothesis — the missingness of `description` depends on protein content.
+
+The plot below shows the distribution of protein (PDV) when `description` is missing (True) versus not missing (False). The two distributions appear different, with recipes missing a description tending to have a slightly different protein distribution, suggesting a potential relationship.
+
+<iframe
+  src="assets/missingness_protein_dist.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+The plot below shows the empirical distribution of the test statistic under the null hypothesis. The red line indicates the observed statistic, which falls far to the right of the null distribution, confirming that the result is statistically significant.
+
+<iframe
+  src="assets/missingness_protein_perm.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+#### `description` Missingness is independent of `sugar (PDV)`
+
+- **Null Hypothesis:** The missingness of `description` is independent of `sugar (PDV)`.
+- **Alternative Hypothesis:** The missingness of `description` depends on `sugar (PDV)`.
+- **Test Statistic:** Absolute difference in mean sugar between recipes with missing and non-missing `description`.
+- **Result:** p-value > 0.05. We fail to reject the null hypothesis — the missingness of `description` is independent of sugar content.
+
+The plot below shows the empirical distribution of the test statistic under the null hypothesis. The red line indicates the observed statistic, which falls within the null distribution, confirming that there is no statistically significant relationship between sugar content and the missingness of `description`.
+
+<iframe
+  src="assets/missingness_sugar_perm.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
+
+
 ## Hypothesis Testing
 
 ## Framing a Prediction Problem
