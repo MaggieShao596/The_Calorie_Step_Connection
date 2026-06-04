@@ -1,4 +1,4 @@
-# The Calorie-Step Connection: Can We Predict Recipe Calories?
+## The Calorie-Step Connection: Can We Predict Recipe Calories?
 
 **By Jacey Chow, Maggie Shao**
 
