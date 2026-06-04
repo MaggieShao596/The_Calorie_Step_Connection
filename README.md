@@ -210,6 +210,15 @@ The plot below shows the empirical distribution of the test statistic under the 
   width="800"
   height="500"
   frameborder="0"
+></iframe
+
+The plot below shows the empirical distribution of the test statistic under the null hypothesis. The red line indicates the observed statistic, which falls well within the null distribution. With a p-value of 0.892, there is no statistically significant relationship between sodium content and the missingness of `avg_rating`.
+
+<iframe
+  src="assets/missingness_sodium_perm.html"
+  width="800"
+  height="500"
+  frameborder="0"
 ></iframe>
 
 ## Hypothesis Testing
