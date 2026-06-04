@@ -189,6 +189,15 @@ The plot below shows the distribution of calorie groups when `avg_rating` is mis
   frameborder="0"
 ></iframe>
 
+The plot below shows the empirical distribution of the test statistic under the null hypothesis from 1,000 permutations. The red line indicates the observed statistic, which falls far to the right of the null distribution. The p-value from our permutation test is **0.0**, confirming that the result is statistically significant.
+
+<iframe
+  src="assets/missingness_calorie_perm.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
+
 #### `avg_rating` Missingness is independent of `sodium (PDV)`
 
 - **Null Hypothesis:** The missingness of `avg_rating` is independent of `sodium (PDV)`.
