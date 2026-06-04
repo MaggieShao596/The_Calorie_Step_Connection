@@ -72,6 +72,16 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 | `n_ingredients` | 0 |
 | `avg_rating` | 2609 |
 
+### Cleaned Dataset Preview
+
+| name | minutes | n_steps | n_ingredients | calories | total fat(PDV) | sugar(PDV) | sodium(PDV) | protein(PDV) | saturated fat(PDV) | carbohydrates(PDV) | avg_rating |
+|------|---------|---------|---------------|----------|----------------|------------|-------------|--------------|-------------------|-------------------|------------|
+| 1 brownies in the world best ever | 40 | 10 | 9 | 138.4 | 10.0 | 50.0 | 3.0 | 3.0 | 19.0 | 6.0 | 4.0 |
+| 1 in canada chocolate chip cookies | 45 | 12 | 11 | 595.1 | 46.0 | 211.0 | 22.0 | 13.0 | 51.0 | 26.0 | 5.0 |
+| 412 broccoli casserole | 40 | 6 | 9 | 194.8 | 20.0 | 6.0 | 32.0 | 22.0 | 36.0 | 3.0 | 5.0 |
+| millionaire pound cake | 120 | 7 | 7 | 878.3 | 63.0 | 326.0 | 13.0 | 20.0 | 123.0 | 39.0 | 5.0 |
+| 2000 meatloaf | 90 | 17 | 13 | 267.0 | 30.0 | 12.0 | 12.0 | 29.0 | 48.0 | 2.0 | 5.0 |
+
 ## Data Cleaning and Exploratory Data Analysis
 
 ## Assessment of Missingness
