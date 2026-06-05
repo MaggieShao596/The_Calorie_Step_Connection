@@ -275,6 +275,19 @@ The plot below shows the empirical distribution of the test statistic under the 
 
 ## Hypothesis Testing
 
+We investigated whether recipes in different calorie groups have different average numbers of preparation steps.
+
+**Null Hypothesis:** The average number of steps is the same across all four calorie groups (Low, Medium, High, Very High). Any observed differences are due to random chance.
+
+**Alternative Hypothesis:** At least one calorie group has a different average number of steps.
+
+**Test Statistic:** Variance of the mean number of steps across the four calorie groups. We chose this statistic because we are comparing more than two groups, and variance captures whether the group means differ from each other overall.
+
+**Significance Level:** 0.05
+
+We ran a permutation test with 1,000 repetitions. The observed variance of group means was **2.7043**, and the p-value was **< 0.001**.
+
+Since the p-value is less than 0.05, we **reject the null hypothesis**. There is strong evidence that the average number of preparation steps differs across calorie groups — higher-calorie recipes tend to require more steps to prepare.
 
 ## Framing a Prediction Problem
 
