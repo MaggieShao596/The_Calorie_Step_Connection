@@ -1,4 +1,4 @@
-## 🍳 Can We Predict Recipe Calories?
+## 🍳 The Calorie-Step Connection: Exploring and Predicting Recipe Calories
 
 **By Jacey Chow, Maggie Shao**
 
