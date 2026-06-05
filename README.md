@@ -307,16 +307,27 @@ The metrics we will be using to evaluate the model are R² and RMSE. We chose R�
 
 ## Baseline Model
 
-The baseline model will predict the calories of recipes based on the sugar(PDV) and number of ingredients. 
-Both sugar(PDV) and number of ingredients are quantitative data. We log transform the Sugar(PDV) feature because this features is highly right skewed. Take log transform will reduce skewness and easier for a model to learn
-The baseline regression model achieved an RMSE of 0.859 and **R^2** value of 0.142 on the test set. The RMSE refers that the model's predictions differ from the actual log-transformed caloreis values by approximately 0.859 units on acerage. The **R^2$ value of 0.142** suggests that the model explain only 14.2% of the variation in the response variable. This baseline model is not considered stron as most of the variability in calorie content remains unexplained.
+For our baseline model, we used a **Linear Regression** model and split the dataset into training (80%) and test sets (20%) to evaluate performance on unseen data. The goal is to predict `calories` of a recipe.
 
-The baseline model was evaluated on a held-out test set (20% of the data):
+The features used in this model are:
+- `n_ingredients` (**quantitative**): number of ingredients, representing recipe complexity
+- `sugar(PDV)` (**quantitative**): sugar content as a percentage of daily value, directly related to calorie content
+
+Both features are quantitative — there are no ordinal or nominal features in this baseline model, so no categorical encodings were necessary. To prepare the data for modeling, we applied the following transformations:
+- For `sugar(PDV)`, we applied a `log1p` transformation to reduce right skewness, making it easier for the linear model to learn relationships
+- All features were then standardized using `StandardScaler`
+- The response variable `calories` was also log-transformed using `log1p` to reduce skewness in the target variable
+
+All steps were implemented in a single `sklearn` Pipeline using `ColumnTransformer`, `StandardScaler`, and `LinearRegression`.
+
+The performance of the model on the test set is:
 
 | Metric | Value |
 |--------|-------|
 | RMSE | 0.859 |
 | R² | 0.142 |
+
+We do not consider this baseline model to be good. The $R^2$ of 0.142 means the model explains only 14.2% of the variation in log-transformed calorie content, leaving 85.8% of the variance unexplained. The RMSE of 0.859 on log-transformed calories also indicates substantial prediction error. This is expected given that we are only using two features — `sugar(PDV)` and `n_ingredients` — which capture only a small portion of what determines a recipe's calorie content. While sugar is directly related to calories, using only two features is not sufficient to fully capture the complexity of calorie prediction. This motivates us to build a more complex final model using additional nutritional features.
 
 
 ## Final Model
