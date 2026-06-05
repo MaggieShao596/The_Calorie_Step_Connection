@@ -303,8 +303,30 @@ At the time of prediction, we would know features such as the number of ingredie
 
 The baseline model will predict the calories of recipes based on the sugar(PDV) and number of ingredients. 
 Both sugar(PDV) and number of ingredients are quantitative data. We log transform the Sugar(PDV) feature because this features is highly right skewed. Take log transform will reduce skewness and easier for a model to learn
-The baseline regression model achieved an RMSE of 0.859 and $R^2$ value of 0.142 on the test set. The RMSE refers that the model's predictions differ from the actual log-transformed caloreis values by approximately 0.859 units on acerage. The $R^2$ value of 0.142 suggests that the model explain only 14.2% of the variation in the response variable. This baseline model is not considered stron as most of the variability in calorie content remains unexplained.
+The baseline regression model achieved an RMSE of 0.859 and **R^2** value of 0.142 on the test set. The RMSE refers that the model's predictions differ from the actual log-transformed caloreis values by approximately 0.859 units on acerage. The **R^2$ value of 0.142** suggests that the model explain only 14.2% of the variation in the response variable. This baseline model is not considered stron as most of the variability in calorie content remains unexplained.
+
+The baseline model was evaluated on a held-out test set (20% of the data):
+
+| Metric | Value |
+|--------|-------|
+| RMSE | 0.859 |
+| R² | 0.142 |
+
 
 ## Final Model
+
+To improve upon the baseline model, we added six additional nutritional features: `n_steps`, `total fat(PDV)`, `sodium(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, and `carbohydrates(PDV)`. We chose to include these nutritional features because calories are directly derived from the macronutrient composition of food — fat, protein, and carbohydrates all contribute directly to calorie content. As more nutritional information is included, the model gains a more complete representation of the factors that determine a recipe's calorie content.
+
+All features were log-transformed using `log1p` to reduce right skewness, then passed through `PolynomialFeatures` with degree 4 to capture non-linear relationships between features. Finally, features were standardized using `StandardScaler` before fitting a `LinearRegression` model.
+
+The final model was evaluated on the same held-out test set (20% of the data):
+
+| Metric | Baseline Model | Final Model |
+|--------|---------------|-------------|
+| RMSE | 0.859 | **0.211** |
+| R² | 0.142 | **0.948** |
+
+The final model achieves an RMSE of **0.211** and an $R^2$ of **0.948**, meaning the model now explains 94.8% of the variation in log-transformed calorie content. This is a dramatic improvement over the baseline model, demonstrating that including nutritional information such as fat, protein, and carbohydrates allows the model to much more accurately predict a recipe's calorie content.
+
 
 ## Fairness Analysis
