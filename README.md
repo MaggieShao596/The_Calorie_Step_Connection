@@ -332,18 +332,33 @@ We do not consider this baseline model to be good. The $R^2$ of 0.142 means the 
 
 ## Final Model
 
-To improve upon the baseline model, we added six additional nutritional features: `n_steps`, `total fat(PDV)`, `sodium(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, and `carbohydrates(PDV)`. We chose to include these nutritional features because calories are directly derived from the macronutrient composition of food — fat, protein, and carbohydrates all contribute directly to calorie content. As more nutritional information is included, the model gains a more complete representation of the factors that determine a recipe's calorie content.
+To improve upon the baseline model, we added six additional features: `n_steps`, `total fat(PDV)`, `sodium(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, and `carbohydrates(PDV)`.
 
-All features were log-transformed using `log1p` to reduce right skewness, then passed through `PolynomialFeatures` with degree 4 to capture non-linear relationships between features. Finally, features were standardized using `StandardScaler` before fitting a `LinearRegression` model.
+**Why these features?**
 
-The final model was evaluated on the same held-out test set (20% of the data):
+We chose these features based on the data generating process — specifically, how calories are physically determined by food composition:
+- `total fat(PDV)`, `protein(PDV)`, `carbohydrates(PDV)`, and `saturated fat(PDV)` are directly tied to calorie content through biochemistry. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram. Including these macronutrient variables gives the model a strong biological basis for prediction — a recipe high in fat will almost certainly be high in calories, regardless of other factors.
+- `sodium(PDV)` is included because sodium content is often correlated with savory, processed, or high-calorie foods. While sodium itself does not contribute calories, it serves as a proxy for certain recipe types that tend to be calorie-dense.
+- `n_steps` is included because our EDA showed that higher-calorie recipes tend to require more preparation steps. More complex recipes often involve more ingredients and richer cooking techniques, which are associated with higher calorie content.
+
+**Modeling Algorithm and Feature Engineering:**
+
+We used **Linear Regression** with **Polynomial Features** to capture non-linear interactions between nutritional variables. All features were log-transformed using `log1p` to reduce right skewness before being passed through `PolynomialFeatures`. Features were then standardized using `StandardScaler`. All steps were implemented in a single `sklearn` Pipeline.
+
+**Hyperparameter Tuning:**
+
+We tuned the `degree` hyperparameter of `PolynomialFeatures` by testing degrees 3, 4, and 5 using cross-validation. We chose to tune this hyperparameter because higher-degree polynomials can capture more complex interactions between nutritional variables, but risk overfitting. Degree **4** produced the best cross-validation performance and was selected as our final model.
+
+**Performance Comparison:**
+
+The final model was evaluated on the same held-out test set (20% of the data) as the baseline model:
 
 | Metric | Baseline Model | Final Model |
 |--------|---------------|-------------|
 | RMSE | 0.859 | **0.211** |
 | R² | 0.142 | **0.948** |
 
-The final model achieves an RMSE of **0.211** and an $R^2$ of **0.948**, meaning the model now explains 94.8% of the variation in log-transformed calorie content. This is a dramatic improvement over the baseline model, demonstrating that including nutritional information such as fat, protein, and carbohydrates allows the model to much more accurately predict a recipe's calorie content.
+The final model achieves an $R^2$ of **0.948**, meaning it explains 94.8% of the variation in log-transformed calorie content — a dramatic improvement over the baseline's 14.2%. The RMSE also dropped from 0.859 to 0.211, indicating much more accurate predictions. This improvement is driven by the addition of macronutrient features that directly determine calorie content from a biological standpoint, combined with polynomial feature interactions that capture non-linear relationships between nutritional variables.
 
 
 ## Fairness Analysis
