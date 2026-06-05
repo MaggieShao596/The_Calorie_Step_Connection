@@ -292,13 +292,18 @@ Since the p-value is less than 0.05, we **reject the null hypothesis**. There is
 
 ## Framing a Prediction Problem
 
-Our goal is to predict the calories of recipes. The model we are using is a regression model.
+Our goal is to predict the calories of recipes. This is a regression problem and we are using the regression model.
 
-The response variable is calories. We chose calories because we are curious if we are able to accurately predict each recipe's calories based on the information in the dataset.
+**Response Variable:** We chose `calories` as our response variable because it is a key nutritional characteristic that is directly determined by a recipe's composition. Predicting calories from observable recipe characteristics is practically useful — food logging apps, recipe platforms, and nutrition tools could use such a model to automatically estimate calorie content without requiring lab analysis.
 
+**Evaluation Metrics:** 
 The metrics we will be using to evaluate the model are R² and RMSE. We chose R² because this tells us how much of the variation in the response variable our model can explain. We chose RMSE because this tells us how far off the predictions are from the actual values, on average. We chose RMSE over MAE because RMSE penalizes large errors more heavily, which is important when large calorie mispredictions are particularly undesirable.
 
-At the time of prediction, we would know features such as the number of ingredients, number of steps, and cooking time, since these are properties of the recipe itself before it is consumed. We would not know the calories, as that is exactly what we are trying to predict.
+
+**Time of Prediction:** We only use features that would be known at the time a recipe is created, before any user interactions occur. This means we can use recipe-level characteristics such as:
+- `n_steps` and `n_ingredients` — structural properties of the recipe that reflect its complexity
+- `sugar(PDV)`, `total fat(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, `carbohydrates(PDV)`, and `sodium(PDV)` — these nutritional features are especially informative because calories are directly derived from macronutrients. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram, so including these features gives the model a strong biological basis for prediction.
+- 
 
 ## Baseline Model
 
