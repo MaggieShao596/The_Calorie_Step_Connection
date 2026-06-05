@@ -17,7 +17,7 @@ Answering this question can help:
 - Recipe platforms surface recipes that match users' time and health preferences
 - Researchers and developers build better recipe recommendation systems
 
-## Datasets Discription
+## Datasets Description
 This project uses two datasets from [Food.com](https://www.food.com/):
 - `RAW_recipes`: contains recipe-level information 
 - `interactions`: contains user ratings and reviews 
@@ -75,7 +75,7 @@ To make calorie comparisons clearer, we created a categorical variable called `c
 We grouped recipes by `calorie_group` and computed summary statistics for the number of preparation steps and average calories. This table reveals a clear trend: as calorie content increases, the average number of preparation steps also increases, suggesting that higher-calorie recipes tend to be more complex to prepare.
 
 | calorie_group | count | mean_steps | median_steps | mean_calories |
-|---------------|-------|------------|--------------|---------------|
+|---|---:|---:|---:|---:|
 | Low | 20946 | 8.17 | 7.0 | 101.14 |
 | Medium | 20952 | 9.57 | 8.0 | 236.53 |
 | High | 20940 | 10.62 | 9.0 | 392.56 |
@@ -168,7 +168,9 @@ For each column, we tested whether its missingness depends on other observed var
 
 ### NMAR Analysis
 
-We believe `avg_rating` is likely **Not Missing at Random (NMAR)**. Whether a recipe has a rating may depend on the rating value itself, for example, users may be less likely to rate recipes they dislike, meaning the missingness is related to the unseen rating value itself. To determine whether this missingness could instead be MAR, we would need additional data such as the number of recipe views, whether users saved the recipe, or how long the recipe has been posted. If missing ratings are mainly explained by low interaction counts or newer recipes, then the missingness may depend on observed variables rather than the missing value itself.
+We believe `avg_rating` is likely **Not Missing at Random (NMAR)**. The absence of a rating may be related to the rating value itself — users who try a recipe but dislike it may choose not to leave a rating, meaning the missingness depends on the unobserved rating value rather than any observed variables. This is consistent with the definition of NMAR, where the probability of a value being missing is related to the missing value itself.
+
+To determine whether this missingness could instead be MAR, we would need additional data such as the number of recipe views, whether users saved the recipe, the number of interactions, or how long the recipe has been posted. If missing ratings were mainly explained by these observed variables rather than the rating value itself, we could classify the missingness as MAR. However, without such data, NMAR remains the more likely explanation.
 
 A plausible NMAR column in this dataset is also `description`. Because `description` is written by the recipe contributor, whether it is missing may depend on unobserved factors such as how much effort the contributor wants to put into the recipe, how confident they feel about it, or whether they believe additional explanation is necessary. These factors are not fully captured in the dataset. Additional data that could help explain this missingness (and potentially make it MAR) would include contributor-level information such as experience level, engagement history, or whether Food.com prompted users to include a description during submission.
 
@@ -292,12 +294,12 @@ Since the p-value is less than our significance level of 0.05, we **reject the n
 
 ## Framing a Prediction Problem
 
-Our goal is to predict the calories of recipes. This is a regression problem and we are using the regression model.
+Our goal is to predict the calories of recipes. This is a regression problem because the response variable, calories, is quantitative and continuous.
 
 **Response Variable:** We chose `calories` as our response variable because it is a key nutritional characteristic that is directly determined by a recipe's composition. Predicting calories from observable recipe characteristics is practically useful — food logging apps, recipe platforms, and nutrition tools could use such a model to automatically estimate calorie content without requiring lab analysis.
 
 **Evaluation Metrics:** 
-The metrics we will be using to evaluate the model are R² and RMSE. We chose R² because this tells us how much of the variation in the response variable our model can explain. We chose RMSE because this tells us how far off the predictions are from the actual values, on average. We chose RMSE over MSE because RMSE is generally preferred for reporting model performance because it is expressed in the same unit as the response variable.
+The metrics we will be using to evaluate the model are R² and RMSE. We chose R² because this tells us how much of the variation in the response variable our model can explain. We chose RMSE because this tells us how far off the predictions are from the actual values, on average. We chose RMSE over MSE because RMSE is generally preferred for reporting model performance because it is expressed in the same unit as the response variable. Our primary evaluation metric is RMSE, because it measures prediction error in calorie units after converting predictions back from the log scale. We also report R², it is also important because it acts as a secondary metric to show the proportion of variation explained.
 
 
 **Time of Prediction:** We only use features that would be known at the time a recipe is created, before any user interactions occur. This means we can use recipe-level characteristics such as:
@@ -312,7 +314,7 @@ The features used in this model are:
 - `n_ingredients` (**quantitative**): number of ingredients, representing recipe complexity
 - `sugar(PDV)` (**quantitative**): sugar content as a percentage of daily value, directly related to calorie content
 
-Both features are quantitative — there are no ordinal or nominal features in this baseline model, so no categorical encodings were necessary. To prepare the data for modeling, we applied the following transformations:
+Both features are quantitative, there are no ordinal or nominal features in this baseline model, so no categorical encodings were necessary. To prepare the data for modeling, we applied the following transformations:
 - For `sugar(PDV)`, we applied a `log1p` transformation to reduce right skewness, making it easier for the linear model to learn relationships
 - All features were then standardized using `StandardScaler`
 - The response variable `calories` was also log-transformed using `log1p` to reduce skewness in the target variable
