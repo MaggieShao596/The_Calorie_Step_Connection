@@ -341,6 +341,15 @@ We chose these features based on the data generating process — specifically, h
 - `sodium(PDV)` is included because sodium content is often correlated with savory, processed, or high-calorie foods. While sodium itself does not contribute calories, it serves as a proxy for certain recipe types that tend to be calorie-dense.
 - `n_steps` is included because our EDA showed that higher-calorie recipes tend to require more preparation steps. More complex recipes often involve more ingredients and richer cooking techniques, which are associated with higher calorie content.
 
+The distributions of our features show significant right skewness, particularly `sugar(PDV)` (skewness = 8.04), `sodium(PDV)` (skewness = 34.41), and `total fat(PDV)` (skewness = 4.14). This justifies our use of `log1p` transformation on all features before modeling.
+
+<iframe
+  src="assets/feature_skewness.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
 **Modeling Algorithm and Feature Engineering:**
 
 We used **Linear Regression** with **Polynomial Features** to capture non-linear interactions between nutritional variables. All features were log-transformed using `log1p` to reduce right skewness before being passed through `PolynomialFeatures`. Features were then standardized using `StandardScaler`. All steps were implemented in a single `sklearn` Pipeline.
@@ -362,3 +371,29 @@ The final model achieves an $R^2$ of **0.948**, meaning it explains 94.8% of the
 
 
 ## Fairness Analysis
+
+We investigated whether our final model performs equally well for recipes with **many steps** versus recipes with **few steps**.
+
+- **Group X (Few Steps):** Recipes with `n_steps` at or below the median number of steps
+- **Group Y (Many Steps):** Recipes with `n_steps` above the median number of steps
+
+**Evaluation Metric:** RMSE (Root Mean Squared Error) on the original calorie scale (after reversing the log transformation)
+
+**Null Hypothesis:** The model has the same predictive accuracy for recipes with many steps and recipes with few steps. Any observed difference in RMSE between the two groups is due to random variation.
+
+**Alternative Hypothesis:** The model has lower predictive accuracy for recipes with many steps than for recipes with few steps, resulting in a larger RMSE for the many-step group.
+
+**Test Statistic:** RMSE(many steps) − RMSE(few steps). A positive value indicates the model performs worse on recipes with many steps.
+
+**Significance Level:** 0.05
+
+We ran a permutation test with 1,000 repetitions by randomly shuffling the group labels and recomputing the difference in RMSE each time. The resulting p-value was **0.368**.
+
+Since the p-value of 0.368 is greater than our significance level of 0.05, we **fail to reject the null hypothesis**. There is not sufficient evidence to conclude that the model performs worse for recipes with many steps than for recipes with few steps. This suggests that our model appears to predict calories fairly across recipes of different complexity levels.
+
+<iframe
+  src="assets/fairness_permutation.html"
+  width="800"
+  height="500"
+  frameborder="0"
+></iframe>
