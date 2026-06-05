@@ -84,7 +84,7 @@ We grouped recipes by `calorie_group` and computed summary statistics for the nu
 The Very High calorie group requires on average **12 steps**, compared to only **8 steps** for the Low calorie group — a difference of nearly 50%. This aggregate finding directly motivates our hypothesis test in the next section.
 
 
-### missing values
+### Missing Values
 
 | Column | Missing Count |
 |--------|--------------|
@@ -384,7 +384,7 @@ We investigated whether our final model performs equally well for recipes with *
 
 **Evaluation Metric:** RMSE (Root Mean Squared Error) on the original calorie scale (after reversing the log transformation)
 
-**Null Hypothesis:** The model has the same predictive accuracy for recipes with many steps and recipes with few steps. Any observed difference in RMSE between the two groups is due to random variation.
+**Null Hypothesis:** The model has the same predictive accuracy for recipes with many steps and recipes with few steps. Any observed difference in RMSE between the two groups is due to random chance.
 
 **Alternative Hypothesis:** The model has lower predictive accuracy for recipes with many steps than for recipes with few steps, resulting in a larger RMSE for the many-step group.
 
@@ -392,9 +392,10 @@ We investigated whether our final model performs equally well for recipes with *
 
 **Significance Level:** 0.05
 
-We ran a permutation test with 1,000 repetitions by randomly shuffling the group labels and recomputing the difference in RMSE each time. The resulting p-value was **0.368**.
+We chose a one-sided test because we specifically hypothesized that the model would struggle more with complex recipes, not that it would perform differently in either direction.
 
-Since the p-value of 0.368 is greater than our significance level of 0.05, we **fail to reject the null hypothesis**. There is not sufficient evidence to conclude that the model performs worse for recipes with many steps than for recipes with few steps. This suggests that our model appears to predict calories fairly across recipes of different complexity levels.
+We ran a permutation test with 1,000 repetitions by randomly shuffling the group labels and recomputing the difference in RMSE each time. The observed difference in RMSE was and the p-value was **0.368**.
 
-Statistical Disclaimer: It is important to interpret this result with proper data science nuance. Failing to reject the null hypothesis does not mathematically prove that our model is 100% fair or entirely free of bias. Rather, it simply states that under our current statistical power and experimental setup, we did not detect a statistically significant difference in performance between the two groups. True algorithmic fairness is multi-faceted, and our conclusion remains bound to the specific metrics, data split, and definitions of complexity utilized in this test.
+Since the p-value of 0.368 is greater than our significance level of 0.05, we **fail to reject the null hypothesis**. There is not sufficient evidence to suggest that our model performs worse for recipes with many steps than for recipes with few steps. This is consistent with the interpretation that our model may predict calories similarly across recipes of different complexity levels.
 
+**Statistical Disclaimer:** All conclusions drawn here are based solely on the results of this permutation test and should not be interpreted as absolute. Failing to reject the null hypothesis does not prove that our model is completely fair or free of bias — it simply means that, under our current experimental setup and significance level, we did not detect a statistically significant difference in performance between the two groups. True algorithmic fairness is multi-faceted, and our conclusion remains bound to the specific metrics, group definitions, and data split used in this analysis.
