@@ -55,6 +55,10 @@ This dataset contains **731,927 rows**, where each row represents a user interac
 | `rating` | User rating |
 | `review` | User review text |
 
+In the `RAW_recipes` dataset, the most important columns are `n_steps`, `n_ingredients`, `minutes`, and `nutrition`. The `nutrition` column is particularly valuable because it contains all the macronutrient information we need — we parsed it into individual columns including `calories` (our response variable), `sugar(PDV)`, `total fat(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, `carbohydrates(PDV)`, and `sodium(PDV)`.
+
+In the `interactions` dataset, the only column we used is `rating`, which we aggregated into a per-recipe `avg_rating` after replacing invalid ratings of 0 with missing values.
+
 Given the datasets, our project investigates whether recipes with different calorie levels tend to have different levels of recipe complexity. More specifically, we focus on whether calorie groups are associated with differences in the average number of preparation steps. To support this analysis, we constructed a clean, recipe-level dataset by combining information from both the recipes and interactions datasets.
 
 ## Data Cleaning and Exploratory Data Analysis
@@ -66,7 +70,9 @@ We also used existing recipe characteristics such as `n_steps`, `n_ingredients`,
 
 To make calorie comparisons clearer, we created a categorical variable called `calorie_group`. Recipes were divided into four groups based on calorie quartiles: `Low`, `Medium`, `High`, and `Very High`. This allowed us to compare average number of steps, average ratings, and other recipe features across different calorie levels.
 
-### summary table of calorie groups
+### Interesting Aggregates
+
+We grouped recipes by `calorie_group` and computed summary statistics for the number of preparation steps and average calories. This table reveals a clear trend: as calorie content increases, the average number of preparation steps also increases, suggesting that higher-calorie recipes tend to be more complex to prepare.
 
 | calorie_group | count | mean_steps | median_steps | mean_calories |
 |---------------|-------|------------|--------------|---------------|
@@ -75,7 +81,7 @@ To make calorie comparisons clearer, we created a categorical variable called `c
 | High | 20940 | 10.62 | 9.0 | 392.56 |
 | Very High | 20944 | 12.06 | 11.0 | 989.57 |
 
-The most relevant variables for our analysis are `calories`, `calorie_group`, `n_steps`, `n_ingredients`, `minutes`, `avg_rating`, and the separated nutrition variables. These variables allow us to examine whether calorie level is connected to recipe complexity and whether higher-calorie recipes tend to involve more preparation steps.
+The Very High calorie group requires on average **12 steps**, compared to only **8 steps** for the Low calorie group — a difference of nearly 50%. This aggregate finding directly motivates our hypothesis test in the next section.
 
 ### Cleaned Dataset Preview
 
@@ -91,6 +97,7 @@ The most relevant variables for our analysis are `calories`, `calorie_group`, `n
 By structuring the data in this way, we created a clean recipe-level dataset that supports exploratory analysis, missingness assessment, and hypothesis testing. Our research question helps us understand how calorie content, preparation effort, and recipe characteristics are related. This can help users choose recipes more effectively, help recipe creators understand how nutritional content connects to preparation complexity, and provide insight into how food platforms may organize or recommend recipes.
 
 ### missing values
+
 | Column | Missing Count |
 |--------|--------------|
 | `name` | 1 |
@@ -140,18 +147,21 @@ To fix this we remove unrealistic outliers that limited the calories from 0 to 4
 
 The distribution is right-skewed, with most recipes falling between 0 and 800 calories.
 
-Also, We explored the relationship between calorie group and numbers of preperation steps.
+
+### Bivariate Analysis
+
+We explored the relationship between calorie group and number of preparation steps.
 
 <iframe
-  src="assets/calorie_group_box.html"
+  src="assets/steps_by_calorie_group.html"
   width="800"
   height="500"
   frameborder="0"
 ></iframe>
 
-The box plot shows that recipes in the Very High calorie group tend to have more preparation steps compared to the Low calorie group. This suggests that higher-calorie recipes are generally more complex to prepare.
+The box plot shows a clear upward trend — recipes in the Very High calorie group have noticeably higher median steps and a wider spread compared to the Low calorie group. This suggests that higher-calorie recipes tend to be more complex to prepare.
 
-## Data Cleaning and Exploratory Data Analysis
+
 
 ## Assessment of Missingness
 
