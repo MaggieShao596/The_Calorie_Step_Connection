@@ -391,9 +391,3 @@ We ran a permutation test with 1,000 repetitions by randomly shuffling the group
 
 Since the p-value of 0.368 is greater than our significance level of 0.05, we **fail to reject the null hypothesis**. There is not sufficient evidence to conclude that the model performs worse for recipes with many steps than for recipes with few steps. This suggests that our model appears to predict calories fairly across recipes of different complexity levels.
 
-<iframe
-  src="assets/fairness_permutation.html"
-  width="800"
-  height="500"
-  frameborder="0"
-></iframe>
