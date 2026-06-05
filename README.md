@@ -153,7 +153,7 @@ The distribution is right-skewed, with most recipes falling between 0 and 800 ca
 We explored the relationship between calorie group and number of preparation steps.
 
 <iframe
-  src="assets/steps_by_calorie_group.html"
+  src="assets/calorie_group_box.html"
   width="800"
   height="500"
   frameborder="0"
