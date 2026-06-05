@@ -278,17 +278,17 @@ The plot below shows the empirical distribution of the test statistic under the 
 
 We investigated whether recipes in different calorie groups have different average numbers of preparation steps.
 
-**Null Hypothesis:** The average number of steps is the same across all four calorie groups (Low, Medium, High, Very High). Any observed differences are due to random chance.
+**Null Hypothesis:** The average number of preparation steps is the same across all four calorie groups (Low, Medium, High, Very High). Any observed differences are due to random chance.
 
-**Alternative Hypothesis:** At least one calorie group has a different average number of steps.
+**Alternative Hypothesis:** At least one calorie group has a different average number of preparation steps than the others.
 
-**Test Statistic:** Variance of the mean number of steps across the four calorie groups. We chose this statistic because we are comparing more than two groups, and variance captures whether the group means differ from each other overall.
+**Test Statistic:** Variance of the group mean number of steps across the four calorie groups. We chose this statistic because we are comparing more than two groups, and variance captures the extent to which group means differ from each other overall.
 
 **Significance Level:** 0.05
 
 We ran a permutation test with 1,000 repetitions. The observed variance of group means was **2.7043**, and the p-value was **< 0.001**.
 
-Since the p-value is less than 0.05, we **reject the null hypothesis**. There is strong evidence that the average number of preparation steps differs across calorie groups — higher-calorie recipes tend to require more steps to prepare.
+Since the p-value is less than our significance level of 0.05, we **reject the null hypothesis**. There is strong evidence that the average number of preparation steps is not the same across all calorie groups. However, all conclusions drawn here are based solely on the results of this hypothesis test and should not be interpreted as absolute. Since we are conducting a statistical test and not a randomized controlled trial, we cannot prove that either hypothesis is 100% true or false, nor can we conclude that calorie level directly causes a difference in the number of preparation steps.
 
 ## Framing a Prediction Problem
 
@@ -297,13 +297,12 @@ Our goal is to predict the calories of recipes. This is a regression problem and
 **Response Variable:** We chose `calories` as our response variable because it is a key nutritional characteristic that is directly determined by a recipe's composition. Predicting calories from observable recipe characteristics is practically useful — food logging apps, recipe platforms, and nutrition tools could use such a model to automatically estimate calorie content without requiring lab analysis.
 
 **Evaluation Metrics:** 
-The metrics we will be using to evaluate the model are R² and RMSE. We chose R² because this tells us how much of the variation in the response variable our model can explain. We chose RMSE because this tells us how far off the predictions are from the actual values, on average. We chose RMSE over MAE because RMSE penalizes large errors more heavily, which is important when large calorie mispredictions are particularly undesirable.
+The metrics we will be using to evaluate the model are R² and RMSE. We chose R² because this tells us how much of the variation in the response variable our model can explain. We chose RMSE because this tells us how far off the predictions are from the actual values, on average. We chose RMSE over MSE because RMSE is generally preferred for reporting model performance because it is expressed in the same unit as the response variable.
 
 
 **Time of Prediction:** We only use features that would be known at the time a recipe is created, before any user interactions occur. This means we can use recipe-level characteristics such as:
-- `n_steps` and `n_ingredients` — structural properties of the recipe that reflect its complexity
-- `sugar(PDV)`, `total fat(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, `carbohydrates(PDV)`, and `sodium(PDV)` — these nutritional features are especially informative because calories are directly derived from macronutrients. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram, so including these features gives the model a strong biological basis for prediction.
-- 
+- `n_steps` and `n_ingredients`： structural properties of the recipe that reflect its complexity
+- `sugar(PDV)`, `total fat(PDV)`, `protein(PDV)`, `saturated fat(PDV)`, `carbohydrates(PDV)`, and `sodium(PDV)`：these nutritional features are especially informative because calories are directly derived from macronutrients. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram, so including these features gives the model a strong biological basis for prediction.
 
 ## Baseline Model
 
@@ -327,7 +326,7 @@ The performance of the model on the test set is:
 | RMSE | 0.859 |
 | R² | 0.142 |
 
-We do not consider this baseline model to be good. The $R^2$ of 0.142 means the model explains only 14.2% of the variation in log-transformed calorie content, leaving 85.8% of the variance unexplained. The RMSE of 0.859 on log-transformed calories also indicates substantial prediction error. This is expected given that we are only using two features — `sugar(PDV)` and `n_ingredients` — which capture only a small portion of what determines a recipe's calorie content. While sugar is directly related to calories, using only two features is not sufficient to fully capture the complexity of calorie prediction. This motivates us to build a more complex final model using additional nutritional features.
+We do not consider this baseline model to be good. The R² of 0.142 means the model explains only 14.2% of the variation in log-transformed calorie content, leaving 85.8% of the variance unexplained. The RMSE of 0.859 on log-transformed calories also indicates substantial prediction error. This is expected given that we are only using two features (`sugar(PDV)` and `n_ingredients`) which capture only a small portion of what determines a recipe's calorie content. While sugar is directly related to calories, using only two features is not sufficient to fully capture the complexity of calorie prediction. This motivates us to build a more complex final model using additional nutritional features.
 
 
 ## Final Model
@@ -336,8 +335,8 @@ To improve upon the baseline model, we added six additional features: `n_steps`,
 
 **Why these features?**
 
-We chose these features based on the data generating process — specifically, how calories are physically determined by food composition:
-- `total fat(PDV)`, `protein(PDV)`, `carbohydrates(PDV)`, and `saturated fat(PDV)` are directly tied to calorie content through biochemistry. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram. Including these macronutrient variables gives the model a strong biological basis for prediction — a recipe high in fat will almost certainly be high in calories, regardless of other factors.
+We chose these features based on the data generating process and specifically, how calories are physically determined by food composition:
+- `total fat(PDV)`, `protein(PDV)`, `carbohydrates(PDV)`, and `saturated fat(PDV)` are directly tied to calorie content through biochemistry. Fat contributes 9 calories per gram, while protein and carbohydrates each contribute 4 calories per gram. Including these macronutrient variables gives the model a strong biological basis for prediction, a recipe high in fat will almost certainly be high in calories, regardless of other factors.
 - `sodium(PDV)` is included because sodium content is often correlated with savory, processed, or high-calorie foods. While sodium itself does not contribute calories, it serves as a proxy for certain recipe types that tend to be calorie-dense.
 - `n_steps` is included because our EDA showed that higher-calorie recipes tend to require more preparation steps. More complex recipes often involve more ingredients and richer cooking techniques, which are associated with higher calorie content.
 
@@ -367,7 +366,7 @@ The final model was evaluated on the same held-out test set (20% of the data) as
 | RMSE | 0.859 | **0.211** |
 | R² | 0.142 | **0.948** |
 
-The final model achieves an $R^2$ of **0.948**, meaning it explains 94.8% of the variation in log-transformed calorie content — a dramatic improvement over the baseline's 14.2%. The RMSE also dropped from 0.859 to 0.211, indicating much more accurate predictions. This improvement is driven by the addition of macronutrient features that directly determine calorie content from a biological standpoint, combined with polynomial feature interactions that capture non-linear relationships between nutritional variables.
+The final model achieves an R² of **0.948**, meaning it explains 94.8% of the variation in log-transformed calorie content,it's a dramatic improvement over the baseline's 14.2%. The RMSE also dropped from 0.859 to 0.211, indicating much more accurate predictions. This improvement is driven by the addition of macronutrient features that directly determine calorie content from a biological standpoint, combined with polynomial feature interactions that capture non-linear relationships between nutritional variables.
 
 
 ## Fairness Analysis
