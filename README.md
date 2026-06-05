@@ -1,6 +1,6 @@
 ## 🍳 The Calorie-Step Connection: Exploring and Predicting Recipe Calories
 
-**By Jacey Chow, Maggie Shao**
+**By Jacey Chow (A18606621), Maggie Shao (A18280187)**
 
 ## Overview
 
@@ -290,7 +290,9 @@ We investigated whether recipes in different calorie groups have different avera
 
 We ran a permutation test with 1,000 repetitions. The observed variance of group means was **2.7043**, and the p-value was **< 0.001**.
 
-Since the p-value is less than our significance level of 0.05, we **reject the null hypothesis**. There is strong evidence that the average number of preparation steps is not the same across all calorie groups. However, all conclusions drawn here are based solely on the results of this hypothesis test and should not be interpreted as absolute. Since we are conducting a statistical test and not a randomized controlled trial, we cannot prove that either hypothesis is 100% true or false, nor can we conclude that calorie level directly causes a difference in the number of preparation steps.
+Since our p value of 0.0 is less than our chosen significance level of 0.05, we **reject the null hypothesis**. There is strong, statistically significant evidence that the average number of preparation steps is not uniform across all calorie groups, aligning with our exploratory findings that higher-calorie recipes generally require more steps.
+
+Statistical Disclaimer: All conclusions drawn here are based strictly on the empirical evidence of this permutation test. Because this is an observational study derived from historical Food.com interactions and not a randomized controlled trial (RCT), we cannot establish a direct causal relationship proving that higher calorie content causes an increase in recipe steps. Furthermore, we do not state that either hypothesis is 100% true or false, as statistical testing yields probabilities rather than absolute, deterministic proof.
 
 ## Framing a Prediction Problem
 
@@ -356,11 +358,13 @@ The distributions of our features show significant right skewness, particularly 
 We used **Linear Regression** with **Polynomial Features** to capture non-linear interactions between nutritional variables. All features were log-transformed using `log1p` to reduce right skewness before being passed through `PolynomialFeatures`. Features were then standardized using `StandardScaler`. All steps were implemented in a single `sklearn` Pipeline.
 
 **Hyperparameter Tuning:**
+To find the optimal complexity for our final model, we performed a hyperparameter search for the degree parameter within PolynomialFeatures. We chose to tune this specific hyperparameter because while higher-degree polynomials can capture more intricate, non-linear interactions between the macronutrient variables, they also introduce a significant risk of overfitting to the training data.
 
-We tuned the `degree` hyperparameter of `PolynomialFeatures` by testing degrees 3, 4, and 5 using cross-validation. We chose to tune this hyperparameter because higher-degree polynomials can capture more complex interactions between nutritional variables, but risk overfitting. Degree **4** produced the best cross-validation performance and was selected as our final model.
+We conducted a grid search using 5-fold cross-validation (GridSearchCV) across a candidate list of options: degrees 3, 4, and 5. This method ensured that each candidate model was trained and validated on different folds of the data, allowing us to evaluate its true ability to generalize to unseen data without touching our final held-out test set.
+
+Amongst the tested options, Degree 4 produced the best average cross-validation performance (achieving the optimal balance between bias and variance) and was selected as the hyperparameter for our final fitted model.
 
 **Performance Comparison:**
-
 The final model was evaluated on the same held-out test set (20% of the data) as the baseline model:
 
 | Metric | Baseline Model | Final Model |
@@ -391,4 +395,6 @@ We investigated whether our final model performs equally well for recipes with *
 We ran a permutation test with 1,000 repetitions by randomly shuffling the group labels and recomputing the difference in RMSE each time. The resulting p-value was **0.368**.
 
 Since the p-value of 0.368 is greater than our significance level of 0.05, we **fail to reject the null hypothesis**. There is not sufficient evidence to conclude that the model performs worse for recipes with many steps than for recipes with few steps. This suggests that our model appears to predict calories fairly across recipes of different complexity levels.
+
+Statistical Disclaimer: It is important to interpret this result with proper data science nuance. Failing to reject the null hypothesis does not mathematically prove that our model is 100% fair or entirely free of bias. Rather, it simply states that under our current statistical power and experimental setup, we did not detect a statistically significant difference in performance between the two groups. True algorithmic fairness is multi-faceted, and our conclusion remains bound to the specific metrics, data split, and definitions of complexity utilized in this test.
 
